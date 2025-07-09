@@ -27,7 +27,7 @@
                         </td>
                         <td>{{$data->nama}}</td>
                         <td>{{$data->jenis_barang}}</td>
-                        <td><span class="badge @if($data->kondisi == 'Baru') bg-label-success @elseif($data->kondisi == 'Rusak') bg-label-danger @elseif me-1">Active</span></td>
+                        <td><span class="badge @if($data->kondisi == 'Baru') bg-label-success @elseif($data->kondisi == 'Rusak') bg-label-danger @elseif($data->kondisi == 'Bekas') bg-label-warning @endif me-1">Active</span></td>
                         <td>
                           <div class="dropdown">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
