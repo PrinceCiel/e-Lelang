@@ -12,7 +12,7 @@
                     <div id="DataTables_Table_0_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
                         <div class="row card-header flex-column flex-md-row pb-0">
                           <div class="d-md-flex justify-content-between align-items-center dt-layout-start col-md-auto me-auto mt-0">
-                            <h5 class="card-title mb-0 text-md-start text-center">DataTable with Buttons</h5>
+                            <h5 class="card-title mb-0 text-md-start text-center">Kategori Barang</h5>
                           </div>
                           <div class="d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto mt-0">
                             <div class="dt-buttons btn-group flex-wrap mb-0">
@@ -22,7 +22,7 @@
                                   <span class="d-none d-sm-inline-block">Export</span>
                                 </span>
                               </button>
-                              <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{ route('backend.barang.create')}}">
+                              <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{ route('backend.kategori.create')}}">
                                 <span>
                                   <span class="d-flex align-items-center gap-2">
                                     <i class="icon-base bx bx-plus icon-sm"></i>
@@ -39,27 +39,19 @@
                     <thead class="table-light">
                       <tr>
                         <th>No</th>
-                        <th>Nama Barang</th>
-                        <th>Jenis Barang</th>
-                        <th>Harga</th>
-                        <th>Kondisi</th>
-                        <th>Kategori</th>
-                        <th>Jumlah</th>
+                        <th>Nama Kategori</th>
+                        <th>slug</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach($barangs as $data)
+                        @foreach($kategori as $data)
                       <tr>
                         <td>
                             {{$loop->iteration}}
                         </td>
                         <td>{{$data->nama}}</td>
-                        <td>{{$data->jenis_barang}}</td>
-                        <td>{{ $data->harga }}</td>
-                        <td><span class="badge @if($data->kondisi == 'Baru') bg-label-success @elseif($data->kondisi == 'Rusak') bg-label-danger @elseif($data->kondisi == 'Bekas') bg-label-warning @endif me-1">{{ $data->kondisi }}</span></td>
-                        <td>{{ $data->kategori->nama ?? 'Tidak ada kategori' }}</td>
-                        <td>{{ $data->jumlah }}</td>
+                        <td>{{$data->slug}}</td>
                         <td>
                           <form action="">
                             <button
@@ -87,63 +79,14 @@
               <!--/ Nested table -->
             </div>
             <!-- / Content -->
-
-            <!-- Footer -->
-            <footer class="content-footer footer bg-footer-theme">
-              <div class="container-xxl">
-                <div
-                  class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-                  <div class="mb-2 mb-md-0">
-                    ©
-                    <script>
-                      document.write(new Date().getFullYear());
-                    </script>
-                    , made with ❤️ by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link">ThemeSelection</a>
-                  </div>
-                  <div class="d-none d-lg-inline-block">
-                    <a
-                      href="https://themeselection.com/item/category/admin-templates/"
-                      target="_blank"
-                      class="footer-link me-4"
-                      >Admin Templates</a
-                    >
-
-                    <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                    <a
-                      href="https://themeselection.com/item/category/bootstrap-admin-templates/"
-                      target="_blank"
-                      class="footer-link me-4"
-                      >Bootstrap Dashboard</a
-                    >
-
-                    <a
-                      href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
-                      target="_blank"
-                      class="footer-link me-4"
-                      >Documentation</a
-                    >
-
-                    <a
-                      href="https://github.com/themeselection/sneat-bootstrap-html-admin-template-free/issues"
-                      target="_blank"
-                      class="footer-link"
-                      >Support</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </footer>
-            <!-- / Footer -->
-
             <div class="content-backdrop fade"></div>
           </div>
-          @foreach($barang as $data)
+          @foreach($kategori as $data)
           <div class="modal fade" id="modalCenter-{{ $data->slug }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="modalCenterTitle">Barang</h5>
+                  <h5 class="modal-title" id="modalCenterTitle">Kategori</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -153,7 +96,7 @@
                 <div class="modal-body">
                   <div class="row">
                     <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Nama Barang</label>
+                      <label for="nameWithTitle" class="form-label">Nama Kategori</label>
                       <input
                         type="text"
                         id="nameWithTitle"

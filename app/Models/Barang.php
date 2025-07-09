@@ -18,9 +18,9 @@ class Barang extends Model
         return $this->hasMany(Struk::class);
     }
 
-    public function datadiri()
+    public function kategori()
     {
-        return $this->belongsTo(Datadiri::class);
+        return $this->belongsTo(Kategori::class, 'id_kategori');
     }
     
 }

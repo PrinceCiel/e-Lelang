@@ -40,6 +40,7 @@
     <!-- endbuild -->
 
     <link rel="stylesheet" href="{{asset ('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+    @yield('style')
 
     <!-- Page CSS -->
 
@@ -63,7 +64,6 @@
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          @include('layouts.backend.header')
           <!-- / Navbar -->
 
           <!-- Content wrapper -->
@@ -103,5 +103,8 @@
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js') }}"></script>
+    @include('sweetalert::alert')
+
+    @yield('script')
   </body>
 </html>

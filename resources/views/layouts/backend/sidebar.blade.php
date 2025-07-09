@@ -73,7 +73,13 @@
                 <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
               </a>
             </li>
-            <li class="menu-item {{ Route::is('backend.barang.index') ? 'active' : '' }} open">
+            <li class="menu-item {{ Route::is('backend.kategori.index') ? 'active' : '' }} {{ Route::is('backend.kategori.create') ? 'active' : '' }} {{ Route::is('backend.kategori.edit') ? 'active' : '' }} open">
+              <a href="{{ route('backend.kategori.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate" data-i18n="Dashboards">Kategori Barang</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Route::is('backend.barang.index') ? 'active' : '' }} {{ Route::is('backend.barang.create') ? 'active' : '' }} open">
               <a href="{{ route('backend.barang.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 <div class="text-truncate" data-i18n="Dashboards">Barang</div>

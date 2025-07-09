@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Str;
 
 class KategoriController extends Controller
 {
@@ -12,7 +14,11 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        $kategori = Kategori::all();
+        $title = 'Hapus Data!';
+        $text = "Apakah anda yakin?";
+        confirmDelete($title, $text);
+        return view('kategori.index', compact('kategori'));
     }
 
     /**
@@ -20,7 +26,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategori.create');
     }
 
     /**
@@ -28,38 +34,61 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'nama' => 'required'
+        ]);
 
+        $kategori = new Kategori();
+        $kategori->nama = $request->nama;
+        $kategori->slug = Str::slug($request->nama, '-');
+        $kategori->save();
+        toast('Data berhasil disimpan', 'success');
+        return redirect()->route('backend.kategori.index');
+    }
+    
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        //
+        $kategori = Kategori::where('slug', $slug)->first();
+        return view('kategori.show', compact('kategori'));
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $kategori = Kategori::where('slug', $slug)->first();
+        return view('kategori.edit', compact('kategori'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        $request->validate([
+            'nama' => 'required'
+        ]);
 
+        $kategori = Kategori::findOrFail($id);
+        $kategori->nama = $request->nama;
+        $kategori->slug = Str::slug($request->nama, '-');
+        $kategori->save();
+        toast('Data berhasil diubah', 'success');
+        return redirect()->route('backend.kategori.index');
+    }
+    
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $kategori = Kategori::findOrFail($id);
+        $kategori->delete();
+        toast('Data berhasil dihapus', 'success');
+        return redirect()->route('backend.kategori.index');
     }
 }

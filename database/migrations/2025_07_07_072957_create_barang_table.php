@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('foto');
             $table->unsignedBigInteger('id_kategori');
             $table->integer('jumlah');
+            $table->string('slug');
             $table->foreign('id_kategori')->references('id')->on('kategoris');
             $table->timestamps();
         });
