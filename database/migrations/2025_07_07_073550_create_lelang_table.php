@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lelang', function (Blueprint $table) {
+        Schema::create('lelangs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_barang');
             $table->dateTime('jadwal_mulai');
             $table->dateTime('jadwal_berakhir');
             $table->enum('status', ['dibuka', 'ditutup', 'selesai']);
-            $table->foreign('id_barang')->references('id')->on('barang');
+            $table->foreign('id_barang')->references('id')->on('barangs');
             $table->timestamps();
         });
     }

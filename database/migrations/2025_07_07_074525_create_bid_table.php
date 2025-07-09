@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bid', function (Blueprint $table) {
+        Schema::create('bids', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_lelang');
             $table->unsignedBigInteger('id_user');
             $table->integer('bid');
-            $table->foreign('id_lelang')->references('id')->on('lelang')->onDelete('cascade');
+            $table->foreign('id_lelang')->references('id')->on('lelangs')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();
         });

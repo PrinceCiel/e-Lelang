@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pemenang', function (Blueprint $table) {
+        Schema::create('pemenangs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_lelang');
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_lelang')->references('id')->on('lelang');
+            $table->foreign('id_lelang')->references('id')->on('lelangs');
             $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();
         });

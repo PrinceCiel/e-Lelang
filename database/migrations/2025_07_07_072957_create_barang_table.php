@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('barang', function (Blueprint $table) {
+        Schema::create('barangs', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('jenis_barang');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('foto');
             $table->unsignedBigInteger('id_kategori');
             $table->integer('jumlah');
-            $table->foreign('id_kategori')->references('id')->on('kategori');
+            $table->foreign('id_kategori')->references('id')->on('kategoris');
             $table->timestamps();
         });
     }

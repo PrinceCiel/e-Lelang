@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('struk', function (Blueprint $table) {
+        Schema::create('struks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_lelang');
             $table->unsignedBigInteger('id_barang');
@@ -20,6 +20,9 @@ return new class extends Migration
             $table->enum('status', ['belum dibayar', 'pending', 'berhasil', 'gagal']);
             $table->string('kode_unik')->nullable();
             $table->dateTime('tgl_trx');
+            $table->foreign('id_lelang')->references('id')->on('lelangs');
+            $table->foreign('id_barang')->references('id')->on('barangs');
+            $table->foreign('id_pemenang')->references('id')->on('pemenangs');
             $table->timestamps();
         });
     }
