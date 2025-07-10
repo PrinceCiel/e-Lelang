@@ -5,13 +5,13 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li>
-                    <a href="./index.html">Home</a>
+                    <a href="{{ route('home')}}">Home</a>
                 </li>
                 <li>
-                    <a href="#0">Pages</a>
-                </li>
+                    <a href="#0">{{$lelang->barang->kategori->nama}}</a>
+                </li>a
                 <li>
-                    <span>Vehicles</span>
+                    <span>{{$lelang->barang->nama}}</span>
                 </li>
             </ul>
         </div>
@@ -27,32 +27,32 @@
                 <div class="product-details-slider owl-theme owl-carousel" id="sync1">
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/product1.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/product2.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/product3.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/product4.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/product5.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/product6.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
                         </div>
                     </div>
                 </div>
@@ -61,32 +61,32 @@
                 <div class="product-bottom-slider owl-theme owl-carousel" id="sync2">
                     <div class="slide-bottom-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/01.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product">
                         </div>
                     </div>
                     <div class="slide-bottom-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/02.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product">
                         </div>
                     </div>
                     <div class="slide-bottom-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/03.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product">
                         </div>
                     </div>
                     <div class="slide-bottom-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/04.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product">
                         </div>
                     </div>
                     <div class="slide-bottom-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/05.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product">
                         </div>
                     </div>
                     <div class="slide-bottom-item">
                         <div class="slide-inner">
-                            <img src="{{ asset('sbidu/assets/images/product/06.png') }}" alt="product">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product">
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                 <div class="col-lg-8">
                     <div class="product-details-content">
                         <div class="product-details-header">
-                            <h2 class="title">The Breeze Zodiac IX</h2>
+                            <h2 class="title">{{$lelang->barang->nama}}</h2>
                             <ul>
                                 <li>Listing ID: 14076242</li>
                                 <li>Item #: 7300-3356862</li>
