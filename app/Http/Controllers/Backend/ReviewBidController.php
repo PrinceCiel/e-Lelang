@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lelang;
 use Illuminate\Http\Request;
 
-class SingleController extends Controller
+class ReviewBidController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $lelang = Lelang::where('status', 'dibuka')->get();
+        return view('bid.index', compact('lelang'));
     }
 
     /**

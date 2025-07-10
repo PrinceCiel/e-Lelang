@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_barang');
             $table->dateTime('jadwal_mulai');
             $table->dateTime('jadwal_berakhir');
-            $table->enum('status', ['dibuka', 'ditutup', 'selesai']);
+            $table->enum('status', ['dibuka', 'ditutup', 'selesai'])->default('ditutup');
             $table->foreign('id_barang')->references('id')->on('barangs');
             $table->timestamps();
         });

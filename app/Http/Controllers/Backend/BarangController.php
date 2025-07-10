@@ -82,9 +82,11 @@ class BarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $barang = Barang::where('slug', $slug)->first();
+        $kategori = Kategori::all();
+        return view('barang.edit', compact('barang','kategori'));
     }
 
     /**
@@ -92,7 +94,36 @@ class BarangController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'jenis_barang' => 'required',
+            'kategori' => 'required',
+            'harga' => 'required',
+            'jumlah' => 'required',
+            'deskripsi' => 'required',
+            'kondisi' => 'required',
+        ]);
+        $barang = Barang::findOrFail($id);
+        $barang->nama = $request->nama;
+        $barang->jenis_barang = $request->jenis_barang;
+        $barang->id_kategori = $request->kategori;
+        $barang->harga = $request->harga;
+        $barang->jumlah = $request->jumlah;
+        $barang->deskripsi = $request->deskripsi;
+        $barang->kondisi = $request->kondisi;
+        $barang->slug = Str::slug($request->nama, '-');
+
+        if($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $randomName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('barangs', $randomName, 'public');
+            // memasukan nama image nya ke database
+            $barang->foto = $path;
+        }
+        $barang->save();
+        toast('Data berhasil diubah', 'success');
+        return redirect()->route('backend.barang.index');
+        
     }
 
     /**

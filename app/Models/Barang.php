@@ -10,7 +10,7 @@ class Barang extends Model
 
     public function lelang()
     {
-        return $this->hasMany(Lelang::class);
+        return $this->hasMany(Lelang::class, 'id_barang');
     }
 
     public function struk()

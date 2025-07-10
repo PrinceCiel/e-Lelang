@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Str;
+use Storage;
 
 class KategoriController extends Controller
 {
@@ -41,6 +42,13 @@ class KategoriController extends Controller
         $kategori = new Kategori();
         $kategori->nama = $request->nama;
         $kategori->slug = Str::slug($request->nama, '-');
+        if($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $randomName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('kategoris', $randomName, 'public');
+            // memasukan nama image nya ke database
+            $kategori->foto = $path;
+        }
         $kategori->save();
         toast('Data berhasil disimpan', 'success');
         return redirect()->route('backend.kategori.index');
@@ -76,6 +84,14 @@ class KategoriController extends Controller
         $kategori = Kategori::findOrFail($id);
         $kategori->nama = $request->nama;
         $kategori->slug = Str::slug($request->nama, '-');
+        if($request->hasFile('foto')) {
+            Storage::disk('public')->delete($kategori->foto);
+            $file = $request->file('foto');
+            $randomName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('kategoris', $randomName, 'public');
+            // memasukan nama image nya ke database
+            $kategori->foto = $path;
+        }
         $kategori->save();
         toast('Data berhasil diubah', 'success');
         return redirect()->route('backend.kategori.index');

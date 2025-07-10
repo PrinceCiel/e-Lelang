@@ -12,7 +12,7 @@
                     <div id="DataTables_Table_0_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
                         <div class="row card-header flex-column flex-md-row pb-0">
                           <div class="d-md-flex justify-content-between align-items-center dt-layout-start col-md-auto me-auto mt-0">
-                            <h5 class="card-title mb-0 text-md-start text-center">Kategori Barang</h5>
+                            <h5 class="card-title mb-0 text-md-start text-center">DataTable with Buttons</h5>
                           </div>
                           <div class="d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto mt-0">
                             <div class="dt-buttons btn-group flex-wrap mb-0">
@@ -22,14 +22,6 @@
                                   <span class="d-none d-sm-inline-block">Export</span>
                                 </span>
                               </button>
-                              <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{ route('backend.kategori.create')}}">
-                                <span>
-                                  <span class="d-flex align-items-center gap-2">
-                                    <i class="icon-base bx bx-plus icon-sm"></i>
-                                    <span class="d-none d-sm-inline-block">Add New Record</span>
-                                  </span>
-                                </span>
-                              </a>
                             </div>
                           </div>
                         </div>
@@ -39,19 +31,20 @@
                     <thead class="table-light">
                       <tr>
                         <th>No</th>
-                        <th>Nama Kategori</th>
-                        <th>slug</th>
+                        <th>Nama Lelang</th>
+                        <th>Nama Pemenang</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach($kategori as $data)
+                        @foreach($pemenang as $data)
                       <tr>
                         <td>
                             {{$loop->iteration}}
                         </td>
-                        <td>{{$data->nama}}</td>
-                        <td>{{$data->slug}}</td>
+                        <td>{{$data->lelang->barang->nama}}</td>
+                        <td>{{$data->users->nama_lengkap}}</td>
+                        <td>{{ $data->harga }}</td>
                         <td>
                           <form action="">
                             <button
@@ -61,10 +54,10 @@
                               data-bs-target="#modalCenter-{{ $data->slug }}">
                               Show
                             </button>
-                            <a class="btn btn-warning" href="{{ route('backend.kategori.edit', $data->slug) }}"
+                            <a class="btn btn-warning" href="{{ route('backend.barang.edit', $data->slug) }}"
                               ><i class="icon-base bx bx-edit-alt me-1"></i></a
                               >
-                              <a class="btn btn-danger" href="{{ route('backend.kategori.destroy', $data->id) }}" data-confirm-delete="true"
+                              <a class="btn btn-danger" href="{{ route('backend.barang.destroy', $data->id) }}" data-confirm-delete="true"
                                 ><i class="icon-base bx bx-trash me-1"></i></a
                               >
                           </form>
@@ -79,14 +72,63 @@
               <!--/ Nested table -->
             </div>
             <!-- / Content -->
+
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl">
+                <div
+                  class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                  <div class="mb-2 mb-md-0">
+                    ©
+                    <script>
+                      document.write(new Date().getFullYear());
+                    </script>
+                    , made with ❤️ by
+                    <a href="https://themeselection.com" target="_blank" class="footer-link">ThemeSelection</a>
+                  </div>
+                  <div class="d-none d-lg-inline-block">
+                    <a
+                      href="https://themeselection.com/item/category/admin-templates/"
+                      target="_blank"
+                      class="footer-link me-4"
+                      >Admin Templates</a
+                    >
+
+                    <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                    <a
+                      href="https://themeselection.com/item/category/bootstrap-admin-templates/"
+                      target="_blank"
+                      class="footer-link me-4"
+                      >Bootstrap Dashboard</a
+                    >
+
+                    <a
+                      href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
+                      target="_blank"
+                      class="footer-link me-4"
+                      >Documentation</a
+                    >
+
+                    <a
+                      href="https://github.com/themeselection/sneat-bootstrap-html-admin-template-free/issues"
+                      target="_blank"
+                      class="footer-link"
+                      >Support</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </footer>
+            <!-- / Footer -->
+
             <div class="content-backdrop fade"></div>
           </div>
-          @foreach($kategori as $data)
+          @foreach($pemenang as $data)
           <div class="modal fade" id="modalCenter-{{ $data->slug }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="modalCenterTitle">Kategori</h5>
+                  <h5 class="modal-title" id="modalCenterTitle">Data Pemenang</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -103,28 +145,28 @@
                   </div>
                   <div class="row">
                     <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Nama Kategori</label>
+                      <label for="nameWithTitle" class="form-label">Nama Lelang</label>
                       <input
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
                         placeholder=""
-                        value="{{ $data->nama }}"
+                        value="{{ $data->lelang->barang->nama }}"
                         disabled />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Slug Kategori</label>
+                      <label for="nameWithTitle" class="form-label">Nama Pemenang</label>
                       <input
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
                         placeholder=""
-                        value="{{ $data->slug }}"
+                        value="{{ $data->users->nama_lengkap }}"
                         disabled />
                     </div>
-                  </div>
+                  </div>>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">

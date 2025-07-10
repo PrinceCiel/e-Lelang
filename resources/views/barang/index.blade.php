@@ -69,10 +69,10 @@
                               data-bs-target="#modalCenter-{{ $data->slug }}">
                               Show
                             </button>
-                            <a class="btn btn-warning" href="{{ route('backend.kategori.edit', $data->slug) }}"
+                            <a class="btn btn-warning" href="{{ route('backend.barang.edit', $data->slug) }}"
                               ><i class="icon-base bx bx-edit-alt me-1"></i></a
                               >
-                              <a class="btn btn-danger" href="{{ route('backend.kategori.destroy', $data->id) }}" data-confirm-delete="true"
+                              <a class="btn btn-danger" href="{{ route('backend.barang.destroy', $data->id) }}" data-confirm-delete="true"
                                 ><i class="icon-base bx bx-trash me-1"></i></a
                               >
                           </form>
@@ -138,7 +138,7 @@
 
             <div class="content-backdrop fade"></div>
           </div>
-          @foreach($barang as $data)
+          @foreach($barangs as $data)
           <div class="modal fade" id="modalCenter-{{ $data->slug }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
@@ -151,6 +151,13 @@
                     aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                  <div class="row mb-4">
+                    <div class="col text-center">
+                      <img src="{{ Storage::url($data->foto) }}"
+                          alt="Foto Barang"
+                          style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col mb-6">
                       <label for="nameWithTitle" class="form-label">Nama Barang</label>
@@ -165,13 +172,77 @@
                   </div>
                   <div class="row">
                     <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Slug Kategori</label>
+                      <label for="nameWithTitle" class="form-label">Jenis Barang</label>
                       <input
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
                         placeholder=""
-                        value="{{ $data->slug }}"
+                        value="{{ $data->jenis_barang }}"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-6">
+                      <label for="nameWithTitle" class="form-label">Kategori Barang</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder=""
+                        value="{{ $data->kategori->nama }}"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-6">
+                      <label for="nameWithTitle" class="form-label">Harga</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder=""
+                        value="{{ $data->harga }}"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-6">
+                      <label for="nameWithTitle" class="form-label">Jumlah</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder=""
+                        value="{{ $data->jumlah }}"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-6">
+                      <label class="form-label" for="basic-icon-default-message">Deskripsi</label>
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-message2" class="input-group-text"
+                          ><i class="icon-base bx bx-comment"></i
+                        ></span>
+                        <textarea
+                        id="basic-icon-default-message"
+                        class="form-control"
+                        placeholder="Deskripsi Produk (Detail Produk dan Detail Kondisi)"
+                        aria-label="Hi, Do you have a moment to talk Joe?"
+                        aria-describedby="basic-icon-default-message2" name="deskripsi" disabled>{{ $data->deskripsi }}</textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-6">
+                      <label for="nameWithTitle" class="form-label">Kondisi Barang</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder=""
+                        value="{{ $data->kondisi }}"
                         disabled />
                     </div>
                   </div>

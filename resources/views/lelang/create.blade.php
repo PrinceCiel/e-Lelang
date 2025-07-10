@@ -8,31 +8,33 @@
                 <div class="col-xl">
                   <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                      <h5 class="mb-0">Tambah Data Kategori</h5>
+                      <h5 class="mb-0">Tambah Data Lelang</h5>
                       <small class="text-body float-end">Merged input group</small>
                     </div>
                     <div class="card-body">
-                      <form action="{{ route('backend.kategori.store') }}" method="post" enctype="multipart/form-data">
+                      <form action="{{ route('backend.lelang.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <div class="mb-6">
-                          <label class="form-label" for="basic-icon-default-fullname">Nama Kategori</label>
-                          <div class="input-group input-group-merge">
-                            <span id="basic-icon-default-fullname2" class="input-group-text"
-                              ><i class="icon-base bx bx-box"></i
-                            ></span>
-                            <input
-                              name="nama"
-                              type="text"
-                              class="form-control"
-                              id="basic-icon-default-fullname"
-                              placeholder="Masukkan Kategori Barang"
-                              aria-label="John Doe"
-                              aria-describedby="basic-icon-default-fullname2" />
-                          </div>
+                        <div class="mb-6"> 
+                          <label for="exampleFormControlSelect1" class="form-label">Pilih Barang</label>
+                          <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="id_barang">
+                            @foreach($barang as $item)
+                            <option value="{{$item->id}}">{{$item->nama}}</option>
+                            @endforeach
+                          </select>
                         </div>
                         <div class="mb-6">
-                          <label for="formFile" class="form-label">Foto Kategori</label>
-                          <input class="form-control" type="file" id="formFile" name="foto"/>
+                          <label for="html5-datetime-local-input" class="form-label">Jadwal Mulai</label>
+                          <input
+                            class="form-control"
+                            type="datetime-local"
+                            id="html5-datetime-local-input" name="jadwal_mulai"/>
+                        </div>
+                        <div class="mb-6">
+                          <label for="html5-datetime-local-input" class="form-label">Jadwal Berakhir</label>
+                          <input
+                            class="form-control"
+                            type="datetime-local"
+                            id="html5-datetime-local-input" name="jadwal_berakhir"/>
                         </div>
                         <button type="submit" class="btn btn-primary">Send</button>
                       </form>

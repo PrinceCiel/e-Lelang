@@ -79,16 +79,28 @@
                 <div class="text-truncate" data-i18n="Dashboards">Kategori Barang</div>
               </a>
             </li>
-            <li class="menu-item {{ Route::is('backend.barang.index') ? 'active' : '' }} {{ Route::is('backend.barang.create') ? 'active' : '' }} open">
+            <li class="menu-item {{ Route::is('backend.barang.index') ? 'active' : '' }} {{ Route::is('backend.barang.create') ? 'active' : '' }} {{ Route::is('backend.barang.edit') ? 'active' : '' }} open">
               <a href="{{ route('backend.barang.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 <div class="text-truncate" data-i18n="Dashboards">Barang</div>
               </a>
             </li>
-            <li class="menu-item {{ Route::is('backend.lelang.index') ? 'active' : '' }} open">
+            <li class="menu-item {{ Route::is('backend.lelang.index') ? 'active' : '' }} {{ Route::is('backend.lelang.create') ? 'active' : '' }} {{ Route::is('backend.lelang.edit') ? 'active' : '' }} open">
               <a href="{{ route('backend.lelang.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 <div class="text-truncate" data-i18n="Dashboards">Lelang</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Route::is('backend.bid.index') ? 'active' : '' }} open">
+              <a href="{{ route('backend.bid.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate" data-i18n="Dashboards">Review Bid</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Route::is('backend.pemenang') ? 'active' : '' }} open">
+              <a href="{{ route('backend.pemenang') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate" data-i18n="Dashboards">Pemenang</div>
               </a>
             </li>
           </ul>

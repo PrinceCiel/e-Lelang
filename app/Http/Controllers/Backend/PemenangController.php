@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pemenang;
 use Illuminate\Http\Request;
 
 class PemenangController extends Controller
@@ -12,7 +13,8 @@ class PemenangController extends Controller
      */
     public function index()
     {
-        //
+        $pemenang = Pemenang::all();
+        return view('pemenang.index', compact('pemenang'));
     }
 
     /**
