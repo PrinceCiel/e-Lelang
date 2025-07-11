@@ -56,7 +56,7 @@ class LelangCekPemenang extends ServiceProvider
                     ->orderByDesc('created_at')
                     ->first();
                 if ($pemenang) {
-                    Pemenang::create([
+                    $newPemenang = Pemenang::create([
                         'id_lelang' => $lelang->id,
                         'id_user'   => $pemenang->id_user,
                         'bid'       => $pemenang->bid, 
@@ -68,16 +68,30 @@ class LelangCekPemenang extends ServiceProvider
                     while (Struk::where('kode_struk', $kodeStruk)->exists()) {
                         $kodeStruk = 'STRL-' . Str::upper(Str::random(10));
                     }
+                    $total = $pemenang->bid + $lelang->barang->harga;
+                    $adminfee = $total * 0.05;
+                    $grandtotal = $total + $adminfee;
                     Struk::create([
                         'id_lelang'   => $lelang->id,
                         'id_barang'   => $lelang->id_barang,
-                        'id_pemenang' => $pemenang->id_user,
-                        'total'       => $pemenang->bid,
+                        'id_pemenang' => $newPemenang->id,
+                        'total'       => $grandtotal,
                         'status'      => 'belum dibayar',
                         'kode_unik'   => null,
                         'tgl_trx'     => now(),
                         'kode_struk'  => $kodeStruk,
                     ]);
+                }
+            }
+            $now = now();
+
+            $habiswaktubayar = Struk::where('status', 'belum dibayar')->get();
+            foreach($habiswaktubayar as $struk)
+            {
+                $bataswaktu = $struk->tgl_trx->addHour();
+                if($now->gt($bataswaktu)){
+                    $struk->status = 'pending';
+                    $struk->save();
                 }
             }
         });

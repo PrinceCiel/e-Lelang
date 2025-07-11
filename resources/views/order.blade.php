@@ -14,7 +14,7 @@
                 </li>
             </ul>
         </div>
-        <div class="bg_img hero-bg bottom_center" data-background="./assets/images/banner/hero-bg.png"></div>
+        <div class="bg_img hero-bg bottom_center" data-background="{{ asset('sbidu/assets/images/banner/hero-bg.png') }}"></div>
     </div>
     <!--============= Hero Section Ends Here =============-->
 
@@ -36,7 +36,7 @@
                                 <div class="col-sm-10 col-md-6">
                                     <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1000">
                                         <div class="auction-thumb">
-                                            <a href="{{ route('struk.show', $item->struk-)}}"><img src="{{ Storage::url($item->barang->foto)}}" alt="car"></a>
+                                            <a href="{{ route('struk.detail', $item->struk->kode_struk)}}"><img src="{{ Storage::url($item->barang->foto)}}" alt="car"></a>
                                             <a href="#0" class="rating"><i class="far fa-star"></i></a>
                                             <a href="#0" class="bid"><i class="flaticon-auction"></i></a>
                                         </div>

@@ -22,40 +22,173 @@
                 <div class="col-lg-8">
                     <div class="row">
                         <div class="col-12">
+                            @if($struk->status == 'belum dibayar')
                             <div class="dash-pro-item mb-30 dashboard-widget">
                                 <div class="user">
-                                    <div class="thumb-area">
-                                        <div class="thumb">
-                                            <img src="{{ asset('sbidu/assets/images/dashboard/user.png') }}" alt="user">
-                                        </div>
-                                        <label for="profile-pic" class="profile-pic-edit"><i class="flaticon-pencil"></i></label>
-                                        <input type="file" id="profile-pic" class="d-none">
+                                    <div class="text-center mb-3">
+                                        <img src="{{ asset('gif/belum.gif') }}" alt="user" style="width: 180px; height: auto;">
                                     </div>
                                     <div class="content">
-                                        <h5 class="title"><a href="#0">Percy Reed</a></h5>
-                                        <span class="username">john@gmail.com</span>
+                                        <h5 class="title"><a href="#0">Menunggu Pembayaran</a></h5>
+                                        <span class="username">{{$struk->kode_struk}}</span>
                                     </div>
                                 </div>
-                                @if($struk )
                                 <div class="header">
-                                    <h4 class="title">Personal Details</h4>
-                                    <span class="edit"><i class="flaticon-edit"></i> Edit</span>
+                                    <h4 class="title">Detail Pembayaran</h4>
                                 </div>
                                 <ul class="dash-pro-body">
                                     <li>
-                                        <div class="info-name">Name</div>
-                                        <div class="info-value">Albert Owens</div>
+                                        <div class="info-name">Nama Lengkap</div>
+                                        <div class="info-value">{{$pemenang->user->nama_lengkap}}</div>
                                     </li>
                                     <li>
-                                        <div class="info-name">Date of Birth</div>
-                                        <div class="info-value">15-03-1974</div>
+                                        <div class="info-name">Nama Lelang</div>
+                                        <div class="info-value">{{$struk->lelang->kode_lelang}}-{{$struk->lelang->barang->nama}}</div>
+                                    </li>
+                                    @php $bidakhir = $pemenang->bid + $struk->lelang->barang->harga; @endphp
+                                    <li>
+                                        <div class="info-name">Bid Akhir</div>
+                                        <div class="info-value">Rp{{ number_format($bidakhir, 0, ',', '.') }}</div>
+                                    </li>
+                                    @php
+                                    $adminfee = $bidakhir * 0.05;
+                                    $total = $adminfee + $bidakhir;
+                                    @endphp
+                                    <li>
+                                        <div class="info-name">Biaya Admin</div>
+                                        <div class="info-value">Rp{{ number_format($adminfee, 0, ',', '.') }}</div>
                                     </li>
                                     <li>
-                                        <div class="info-name">Address</div>
-                                        <div class="info-value">8198 Fieldstone Dr.La Crosse, WI 54601</div>
+                                        <div class="info-name" style="font-size: 25px ; font-weight: bold;">Total</div>
+                                        <div class="info-value" style="font-size: 25px ; font-weight: bold;">Rp{{ number_format($total, 0, ',', '.') }}</div>
+                                    </li>
+                                    <hr>
+                                    <li>
+                                        <div class="info-name" style="font-size: 20px;" align=center>Transfer Ke</div>
+                                    </li>
+                                    <li>
+                                        <ul class="list-unstyled info-value">
+                                            <li>
+                                                <div class="info-name"><strong>Bank</strong></div>
+                                                <div class="info-value"><strong>BCA</strong></div>
+                                            </li>
+                                            <li>
+                                                <div class="info-name"><strong>No. Rekening</strong></div>
+                                                <div class="info-value"><strong>1234567890</strong></div>
+                                            </li>
+                                            <li>
+                                                <div class="info-name"><strong>Atas Nama</strong></div>
+                                                <div class="info-value"><strong>PT Lelang Makmur</strong></div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <hr>
+                                    <li>
+                                        <p>Lakukan Pembayaran Sebelum {{ $struk->tgl_trx->addHour()->format('H:i d-m-Y') }}</p>
                                     </li>
                                 </ul>
                             </div>
+                            @elseif($struk->status == 'pending')
+                            <div class="dash-pro-item mb-30 dashboard-widget">
+                                <div class="user">
+                                    <div class="text-center mb-3">
+                                        <img src="{{ asset('gif/pending.gif') }}" alt="user" style="width: 180px; height: auto;">
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title"><a href="#0">Menunggu Konfirmasi Pembayaran</a></h5>
+                                        <span class="username">{{$struk->kode_struk}}</span>
+                                    </div>
+                                </div>
+                                <div class="header">
+                                    <h4 class="title">Detail Pembayaran</h4>
+                                </div>
+                                <ul class="dash-pro-body">
+                                    <li>
+                                        <div class="info-name">Nama Lengkap</div>
+                                        <div class="info-value">{{$pemenang->user->nama_lengkap}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="info-name">Nama Lelang</div>
+                                        <div class="info-value">{{$struk->lelang->kode_lelang}}-{{$struk->lelang->barang->nama}}</div>
+                                    </li>
+                                    @php $bidakhir = $pemenang->bid + $struk->lelang->barang->harga; @endphp
+                                    <li>
+                                        <div class="info-name">Bid Akhir</div>
+                                        <div class="info-value">Rp{{ number_format($bidakhir, 0, ',', '.') }}</div>
+                                    </li>
+                                    @php
+                                    $adminfee = $bidakhir * 0.05;
+                                    $total = $adminfee + $bidakhir;
+                                    @endphp
+                                    <li>
+                                        <div class="info-name">Biaya Admin</div>
+                                        <div class="info-value">Rp{{ number_format($adminfee, 0, ',', '.') }}</div>
+                                    </li>
+                                    <li>
+                                        <div class="info-name" style="font-size: 25px ; font-weight: bold;">Total</div>
+                                        <div class="info-value" style="font-size: 25px ; font-weight: bold;">Rp{{ number_format($total, 0, ',', '.') }}</div>
+                                    </li>
+                                    <hr>
+                                    <li>
+                                        <p>Pembayaran sedang di verifikasi oleh admin.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            @elseif($struk->status == 'berhasil')
+                            <div class="dash-pro-item mb-30 dashboard-widget">
+                                <div class="user">
+                                    <div class="text-center mb-3">
+                                        <img src="{{ asset('gif/success.gif') }}" alt="user" style="width: 180px; height: auto;">
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title"><a href="#0">Pembayaran Telah Diterima</a></h5>
+                                        <span class="username">{{$struk->kode_struk}}</span>
+                                    </div>
+                                </div>
+                                <div class="header">
+                                    <h4 class="title">Detail Pembayaran</h4>
+                                </div>
+                                <ul class="dash-pro-body">
+                                    <li>
+                                        <div class="info-name">Nama Lengkap</div>
+                                        <div class="info-value">{{$pemenang->user->nama_lengkap}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="info-name">Nama Lelang</div>
+                                        <div class="info-value">{{$struk->lelang->kode_lelang}}-{{$struk->lelang->barang->nama}}</div>
+                                    </li>
+                                    @php $bidakhir = $pemenang->bid + $struk->lelang->barang->harga; @endphp
+                                    <li>
+                                        <div class="info-name">Bid Akhir</div>
+                                        <div class="info-value">Rp{{ number_format($bidakhir, 0, ',', '.') }}</div>
+                                    </li>
+                                    @php
+                                    $adminfee = $bidakhir * 0.05;
+                                    $total = $adminfee + $bidakhir;
+                                    @endphp
+                                    <li>
+                                        <div class="info-name">Biaya Admin</div>
+                                        <div class="info-value">Rp{{ number_format($adminfee, 0, ',', '.') }}</div>
+                                    </li>
+                                    <li>
+                                        <div class="info-name" style="font-size: 25px ; font-weight: bold;">Total</div>
+                                        <div class="info-value" style="font-size: 25px ; font-weight: bold;">Rp{{ number_format($total, 0, ',', '.') }}</div>
+                                    </li>
+                                    <hr>
+                                    <li>
+                                        <div class="info-name" style="font-size: 25px ; font-weight: bold;">Kode Unik</div>
+                                        <div class="info-value" style="font-size: 25px ; font-weight: bold;">{{ $struk->kode_unik}}</div>
+                                    </li>
+                                    <hr>
+                                    <li style="margin-bottom: 20px;">
+                                        <p>Pengambilan secara offline di SMK ASSALAAM BANDUNG</p>
+                                    </li>
+                                    <li>
+                                        <p>Atau Hubungi +62-895-0998-3660 via WhatsApp untuk Pengiriman lebih lanjut.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

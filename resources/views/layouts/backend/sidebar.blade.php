@@ -103,5 +103,11 @@
                 <div class="text-truncate" data-i18n="Dashboards">Pemenang</div>
               </a>
             </li>
+            <li class="menu-item {{ Route::is('backend.struk.index') ? 'active' : '' }} open">
+              <a href="{{ route('backend.struk.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate" data-i18n="Dashboards">Struk</div>
+              </a>
+            </li>
           </ul>
         </aside>

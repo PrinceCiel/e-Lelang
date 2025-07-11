@@ -10,7 +10,7 @@ class Pemenang extends Model
 
     public function struk()
     {
-        return $this->hasOne(Struk::class);
+        return $this->hasOne(Struk::class, 'id_pemenang');
     }
 
     public function lelang()

@@ -20,7 +20,7 @@ class Lelang extends Model
 
     public function struk()
     {
-        return $this->hasOne(Struk::class);
+    return $this->hasOne(Struk::class, 'id_lelang');
     }
 
     public function barang()

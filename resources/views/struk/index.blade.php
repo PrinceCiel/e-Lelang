@@ -22,7 +22,7 @@
                                   <span class="d-none d-sm-inline-block">Export</span>
                                 </span>
                               </button>
-                              <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{ route('backend.lelang.create')}}">
+                              <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{ route('backend.struk.create')}}">
                                 <span>
                                   <span class="d-flex align-items-center gap-2">
                                     <i class="icon-base bx bx-plus icon-sm"></i>
@@ -39,47 +39,31 @@
                     <thead class="table-light">
                       <tr>
                         <th>No</th>
-                        <th>Nama Lelang</th>
-                        <th>Jadwal Mulai</th>
-                        <th>Jadwal Berakhir</th>
-                        <th>Status</th>
                         <th>Kode Lelang</th>
+                        <th>Nama Lelang</th>
+                        <th>Nama Lengkap</th>
+                        <th>Nominal</th>
+                        <th>Status</th>
+                        <th>Tanggal Transaksi</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach($lelangs as $data)
+                        @foreach($struk as $data)
                       <tr>
                         <td>
                             {{$loop->iteration}}
                         </td>
-                        <td>{{$data->barang->nama}}</td>
-                        <td>{{$data->jadwal_mulai}}</td>
-                        <td>{{ $data->jadwal_berakhir }}</td>
-                        <td><span class="badge @if($data->status == 'dibuka') bg-label-success @elseif($data->status == 'selesai') bg-label-danger @elseif($data->status == 'ditutup') bg-label-warning @endif me-1">{{ $data->status }}</span></td>
-                        <td>{{ $data->kode_lelang}}</td>
+                        <td>{{$data->lelang->kode_lelang}}</td>
+                        <td>{{$data->lelang->barang->nama}}</td>
+                        <td>{{ $data->pemenang->user->nama_lengkap }}</td>
+                        <td>{{ $data->total }}</td>
+                        <td><span class="badge @if($data->status == 'berhasil') bg-label-success @elseif($data->status == 'gagal') bg-label-danger @elseif($data->status == 'belum dibayar') bg-label-warning @elseif($data->status == 'pending') bg-label-info @endif me-1">{{ $data->status }}</span></td>
+                        <td>{{ $data->tgl_trx->format('H:i d-m-Y')}}</td>
                         <td>
-                          <form action="">
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              data-bs-toggle="modal"
-                              data-bs-target="#modalCenter-{{ $data->slug }}">
-                              Show
-                            </button>
-                            @if($data->status == 'ditutup')
-                              <a class="btn btn-warning" href="{{ route('backend.lelang.edit', $data->id) }}"
-                              ><i class="icon-base bx bx-edit-alt me-1"></i></a
-                              >
-                              <a class="btn btn-danger" href="{{ route('backend.lelang.destroy', $data->id) }}" data-confirm-delete="true"
-                                ><i class="icon-base bx bx-trash me-1"></i></a
-                              >
-                            @elseif($data->status == 'selesai')
-                              <a class="btn btn-danger" href="{{ route('backend.lelang.destroy', $data->id) }}" data-confirm-delete="true"
-                                ><i class="icon-base bx bx-trash me-1"></i></a
-                              >
-                            @endif
-                          </form>
+                            <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalCenter-{{ $data->kode_struk }}"
+                            ><i class="icon-base bx bx-edit-alt me-1"></i></a
+                            >
                         </td>
                       </tr>
                       @endforeach
@@ -142,12 +126,12 @@
 
             <div class="content-backdrop fade"></div>
           </div>
-          @foreach($lelangs as $data)
-          <div class="modal fade" id="modalCenter-{{ $data->slug }}" tabindex="-1" aria-hidden="true">
+          @foreach($struk as $data)
+          <div class="modal fade" id="modalCenter-{{ $data->kode_struk }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
+                <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="modalCenterTitle">Barang</h5>
+                  <h5 class="modal-title" id="modalCenterTitle">Status Pembayaran</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -155,11 +139,16 @@
                     aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <div class="row mb-4">
-                    <div class="col text-center">
-                      <img src="{{ Storage::url($data->barang->foto) }}"
-                          alt="Foto Barang"
-                          style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px;">
+                  <div class="row">
+                    <div class="col mb-6">
+                      <label for="nameWithTitle" class="form-label">Kode Lelang</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder=""
+                        value="{{ $data->lelang->kode_lelang }}"
+                        disabled />
                     </div>
                   </div>
                   <div class="row">
@@ -170,40 +159,41 @@
                         id="nameWithTitle"
                         class="form-control"
                         placeholder=""
-                        value="{{ $data->barang->nama }}"
+                        value="{{ $data->lelang->barang->nama }}"
                         disabled />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Jadwal Mulai</label>
+                      <label for="nameWithTitle" class="form-label">Total</label>
                       <input
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
                         placeholder=""
-                        value="{{ $data->jadwal_mulai }}"
+                        value="Rp.{{ number_format($data->total, 0, ',', '.') }}"
                         disabled />
                     </div>
                   </div>
+                  <form action="{{ route('backend.struk.update', $data->kode_struk) }}" method="post">
+                  @csrf
+                  @method('PUT')
                   <div class="row">
                     <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Jadwal Berakhir</label>
-                      <input
-                        type="text"
-                        id="nameWithTitle"
-                        class="form-control"
-                        placeholder=""
-                        value="{{ $data->jadwal_berakhir }}"
-                        disabled />
+                        <label for="nameWithTitle" class="form-label">Status</label>
+                        <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="status">
+                            <option value="berhasil">Berhasil</option>
+                            <option value="gagal">Gagal</option>
+                        </select>
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                    Close
+                  <button type="submit" class="btn btn-primary">
+                    Simpan Perubahan
                   </button>
                 </div>
+                </form>
               </div>
             </div>
           </div>

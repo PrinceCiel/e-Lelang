@@ -108,8 +108,8 @@
                             </ul>
                         </div>
                         <ul class="price-table mb-30">
-                            @if($lelang->status === 'ditutup')
-                            @php $bidtertinggi = $lelang->pemenang->bid; @endphp
+                            @if($lelang->status == 'selesai')
+                            @php $bidtertinggi = $lelang->pemenang->bid + $lelang->barang->harga; @endphp
                             <li class="header">
                                 <h5 class="current">BID Akhir</h5>
                                 <h3 class="price">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}</h3>
@@ -233,7 +233,7 @@
                             <div class="thumb">
                                 <img src="{{ asset('sbidu/assets/images/product/tab3.png') }}" alt="product">
                             </div>
-                            <div class="content">Bid History (36)</div>
+                            <div class="content">Bid History ({{$countBid}})</div>
                         </a>
                     </li>
                     <li>
@@ -392,6 +392,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($bid as $item)
                                         <tr>
                                             <td data-history="bidder">
                                                 <div class="user-info">
@@ -399,74 +400,16 @@
                                                         <img src="{{ asset('sbidu/assets/images/history/01.png') }}" alt="history">
                                                     </div>
                                                     <div class="content">
-                                                        Moses Watts
+                                                        {{$item->users->nama_lengkap}}
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td data-history="date">06/16/2024</td>
-                                            <td data-history="time">02:45:25 PM</td>
-                                            <td data-history="unit price">$900.00</td>
+                                            @php $bid = $item->bid + $lelang->barang->harga; @endphp
+                                            <td data-history="date">{{ $item->created_at->format('Y-m-d') }}</td>
+                                            <td data-history="time">{{ $item->created_at->format('h:i A') }}</td>
+                                            <td data-history="unit price">Rp{{ number_format($bid, 0, ',', '.') }}</td>
                                         </tr>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="{{ asset('sbidu/assets/images/history/02.png') }}" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                        Pat Powell
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">06/16/2024</td>
-                                            <td data-history="time">02:45:25 PM</td>
-                                            <td data-history="unit price">$900.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="{{ asset('sbidu/assets/images/history/03.png') }}" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                        Jack Rodgers
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">06/16/2024</td>
-                                            <td data-history="time">02:45:25 PM</td>
-                                            <td data-history="unit price">$900.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="{{ asset('sbidu/assets/images/history/04.png') }}" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                        Arlene Paul
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">06/16/2024</td>
-                                            <td data-history="time">02:45:25 PM</td>
-                                            <td data-history="unit price">$900.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="{{ asset('sbidu/assets/images/history/05.png') }}" alt="history">
-                                                    </div>
-                                                    <div class="content">
-                                                        Marcia Clarke
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">06/16/2024</td>
-                                            <td data-history="time">02:45:25 PM</td>
-                                            <td data-history="unit price">$900.00</td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 <div class="text-center mb-3 mt-4">

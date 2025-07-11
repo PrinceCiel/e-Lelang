@@ -8,9 +8,12 @@ class Struk extends Model
 {
     public $fillable = ['id_lelang','id_barang', 'id_pemenang', 'total', 'status', 'kode_unik','kode_struk', 'tgl_trx'];
 
+    protected $casts = [
+        'tgl_trx' => 'datetime',
+    ];
     public function lelang()
     {
-        return $this->belongsTo(lelang::class);
+        return $this->belongsTo(Lelang::class, 'id_lelang');
     }
 
     public function barang()
@@ -20,6 +23,6 @@ class Struk extends Model
 
     public function pemenang()
     {
-        return $this->belongsTo(Pemenang::class);
+        return $this->belongsTo(Pemenang::class, 'id_pemenang');
     }
 }

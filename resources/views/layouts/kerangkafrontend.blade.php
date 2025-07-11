@@ -63,26 +63,7 @@
             <div class="anime-7 zigzag">
                 <img src="{{ asset('sbidu/assets/images/footer/c4.png') }}" alt="footer">
             </div>
-        </div>
-        <div class="newslater-wrapper">
-            <div class="container">
-                <div class="newslater-area">
-                    <div class="newslater-thumb">
-                        <img src="{{ asset('sbidu/assets/images/footer/newslater.png') }}" alt="footer">
-                    </div>
-                    <div class="newslater-content">
-                        <div class="section-header left-style mb-low" data-aos="fade-down" data-aos-duration="1100">
-                            <h5 class="cate">Subscribe to Sbidu</h5>
-                            <h3 class="title">To Get Exclusive Benefits</h3>
-                        </div>
-                        <form class="subscribe-form">
-                            <input type="text" placeholder="Enter Your Email" name="email">
-                            <button type="submit" class="custom-button">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div
         <div class="footer-top padding-bottom padding-top">
             <div class="container">
                 <div class="row mb--60">
