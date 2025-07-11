@@ -13,13 +13,13 @@ use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::resource('struk', SingleController::class);
 Route::get('/', [FrontController::class, 'index'])->name('home');
 
 Auth::routes();
 Route::get('kategori/{slug}', [FrontController::class, 'show'])->name('kategori.show');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('lelang', SingleController::class);
-Route::resource('struk', StrukController::class);
 
 Route::group(['prefix'=>'admin','as' => 'backend.','middleware'=>['auth', IsAdmin::class]], function(){
     Route::get('/', [BackendController::class, 'index'])->name('home');

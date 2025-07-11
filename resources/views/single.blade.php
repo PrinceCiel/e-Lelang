@@ -108,10 +108,18 @@
                             </ul>
                         </div>
                         <ul class="price-table mb-30">
+                            @if($lelang->status === 'ditutup')
+                            @php $bidtertinggi = $lelang->pemenang->bid; @endphp
+                            <li class="header">
+                                <h5 class="current">BID Akhir</h5>
+                                <h3 class="price">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}</h3>
+                            </li>
+                            @else
                             <li class="header">
                                 <h5 class="current">Current Price</h5>
                                 <h3 class="price">Rp{{ number_format($hargaTerbaru, 0, ',', '.') }}</h3>
                             </li>
+                            @endif
                             <li>
                                 <span class="details">Buyer's Premium</span>
                                 <h5 class="info">10.00%</h5>
@@ -121,6 +129,7 @@
                                 <h5 class="info">$50.00</h5>
                             </li>
                         </ul>
+                        @if($lelang->status === 'dibuka')
                         <div class="product-bid-area">
                             <form class="product-bid-form" action="{{ route('lelang.store') }}" method="post">
                                 @csrf
@@ -132,8 +141,11 @@
                                 <button type="submit" class="custom-button">Submit a bid</button>
                             </form>
                         </div>
+                        @endif
                         <div class="buy-now-area">
+                            @if($lelang->status === 'dibuka')
                             <a href="{{ route('struk.show', $lelang->kode_lelang)}}" class="custom-button" data-confirm-delete="true">Buy Now: @php $BeliLangsung = $hargaTerbaru * 10; @endphp Rp.{{$BeliLangsung}}</a>
+                            @endif
                             <a href="#0" class="rating custom-button active border"><i class="fas fa-star"></i> Add to Wishlist</a>
                             <div class="share-area">
                                 <span>Share to:</span>

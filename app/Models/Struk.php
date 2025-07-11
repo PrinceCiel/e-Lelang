@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Struk extends Model
 {
-    public $fillable = ['id_lelang','id_barang', 'id_pemenang', 'total', 'status', 'kode_unik', 'tgl_trx'];
+    public $fillable = ['id_lelang','id_barang', 'id_pemenang', 'total', 'status', 'kode_unik','kode_struk', 'tgl_trx'];
 
     public function lelang()
     {

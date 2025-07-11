@@ -39,7 +39,7 @@
                                     <a href="#0">Profile</a>
                                     <ul class="submenu">
                                         <li>
-                                            <a href="./dashboard.html">Dashboard</a>
+                                            <a href="{{ route('struk.index')}}">Dashboard</a>
                                         </li>
                                         <li>
                                             <a href="./profile.html">Personal Profile</a>

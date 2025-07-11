@@ -18,8 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pemenang');
             $table->integer('total');
             $table->enum('status', ['belum dibayar', 'pending', 'berhasil', 'gagal']);
-            $table->string('kode_unik')->nullable();
+            $table->string('kode_unik')->nullable()->unique();
             $table->dateTime('tgl_trx');
+            $table->string('kode_struk')->unique();
             $table->foreign('id_lelang')->references('id')->on('lelangs');
             $table->foreign('id_barang')->references('id')->on('barangs');
             $table->foreign('id_pemenang')->references('id')->on('pemenangs');

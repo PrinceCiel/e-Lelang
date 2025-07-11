@@ -1,17 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-use Auth;
 use App\Models\Barang;
 use App\Models\Bid;
 use App\Models\Lelang;
+use App\Models\Pemenang;
+use App\Models\Struk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SingleController extends Controller
 {
     public function index()
     {
-
+        $user_id = Auth::user()->id;
+        $pemenang = Pemenang::where('id_user', $user_id)->get();
+        $lelang = Lelang::whereIn('id', function($query) use ($user_id) {
+            $query->select('id_lelang')
+              ->from('pemenangs')
+              ->where('id_user', $user_id);
+        })->with('barang')->get();
+        // $struk = Struk::where('id_user', $pemenang->id_user);
+        return view('order', compact('lelang'));
     }
     public function show(string $kode)
     {

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Struk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StrukController extends Controller
 {
@@ -12,7 +13,8 @@ class StrukController extends Controller
      */
     public function index()
     {
-        //
+        $struk = Struk::findOrFail(Auth::user()->id);
+        return view('struk', compact('struk'));
     }
 
     /**
