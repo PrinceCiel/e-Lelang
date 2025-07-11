@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pemenang extends Model
 {
-    public $fillable = ['id_lelang','id_user'];
+    public $fillable = ['id_lelang','id_user', 'bid'];
 
     public function struk()
     {
@@ -15,11 +15,11 @@ class Pemenang extends Model
 
     public function lelang()
     {
-        return $this->belongsTo(Lelang::class);
+        return $this->belongsTo(Lelang::class, 'id_lelang');
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

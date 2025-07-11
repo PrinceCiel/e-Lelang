@@ -110,7 +110,7 @@
                         <ul class="price-table mb-30">
                             <li class="header">
                                 <h5 class="current">Current Price</h5>
-                                <h3 class="price">US $700.00</h3>
+                                <h3 class="price">Rp{{ number_format($hargaTerbaru, 0, ',', '.') }}</h3>
                             </li>
                             <li>
                                 <span class="details">Buyer's Premium</span>
@@ -122,16 +122,18 @@
                             </li>
                         </ul>
                         <div class="product-bid-area">
-                            <form class="product-bid-form">
+                            <form class="product-bid-form" action="{{ route('lelang.store') }}" method="post">
+                                @csrf
                                 <div class="search-icon">
                                     <img src="{{ asset('sbidu/assets/images/product/search-icon.png') }}" alt="product">
                                 </div>
-                                <input type="text" placeholder="Enter you bid amount">
+                                <input type="hidden" name="kode_lelang" value="{{$lelang->kode_lelang}}">
+                                <input type="integer" placeholder="Masukkan Kenaikan bid" name="bid">
                                 <button type="submit" class="custom-button">Submit a bid</button>
                             </form>
                         </div>
                         <div class="buy-now-area">
-                            <a href="#0" class="custom-button">Buy Now: $4,200</a>
+                            <a href="{{ route('struk.show', $lelang->kode_lelang)}}" class="custom-button" data-confirm-delete="true">Buy Now: @php $BeliLangsung = $hargaTerbaru * 10; @endphp Rp.{{$BeliLangsung}}</a>
                             <a href="#0" class="rating custom-button active border"><i class="fas fa-star"></i> Add to Wishlist</a>
                             <div class="share-area">
                                 <span>Share to:</span>

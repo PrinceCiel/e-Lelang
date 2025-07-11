@@ -12,6 +12,7 @@
                     </div>
                     <div class="card-body pt-4">
                         <ul class="p-0 m-0">
+                            @foreach($item->bid as $bid)
                             <li class="d-flex align-items-center mb-6">
                                 <div class="avatar flex-shrink-0 me-3">
                                     <img src="{{asset ('assets/img/icons/unicons/wallet.png') }}" alt="User" class="rounded" />
@@ -22,11 +23,12 @@
                                         <h6 class="fw-normal mb-0">Mac'D</h6>
                                     </div>
                                     <div class="user-progress d-flex align-items-center gap-2">
-                                        <h6 class="fw-normal mb-0">+270.69</h6>
-                                        <span class="text-body-secondary">USD</span>
+                                        <h6 class="fw-normal mb-0">{{ $bid->bid }}</h6>
+                                        <span class="text-body-secondary">IDR</span>
                                     </div>
                                 </div>
                             </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

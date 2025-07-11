@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use App\Models\Lelang;
 use Illuminate\Http\Request;
+use Str;
 
 class LelangController extends Controller
 {
@@ -15,22 +16,6 @@ class LelangController extends Controller
     public function index()
     {
         $lelangs = Lelang::latest()->get();
-
-        foreach($lelangs as $lelang){
-            $now = now();
-            if($now->lt($lelang->jadwal_mulai)) {
-                $status = 'ditutup';
-            } elseif($now->between($lelang->jadwal_mulai, $lelang->jadwal_berakhir)){
-                $status = 'dibuka';
-            } else {
-                $status = 'selesai';
-            }
-
-            if($lelang->status !== $status){
-                $lelang->status = $status;
-                $lelang->save();
-            }
-        }
 
         $title = 'Hapus Data!';
         $text = "Apakah anda yakin?";
@@ -58,10 +43,19 @@ class LelangController extends Controller
             'jadwal_berakhir' => 'required'
         ]);
 
+        // generate kode lelang: L + 6 huruf random kapital
+        $kodeLelang = 'L' . Str::upper(Str::random(10));
+
+        // cek biar gak duplikat (kecil kemungkinan sih, tapi tetep aman)
+        while (Lelang::where('kode_lelang', $kodeLelang)->exists()) {
+            $kodeLelang = 'L' . Str::upper(Str::random(10));
+        }
+
         $lelang = new Lelang();
         $lelang->id_barang = $request->id_barang;
         $lelang->jadwal_mulai = $request->jadwal_mulai;
         $lelang->jadwal_berakhir = $request->jadwal_berakhir;
+        $lelang->kode_lelang = $kodeLelang;
 
         $barang = Barang::findOrFail($request->id_barang);
         $jumlah = $barang->jumlah - 1;

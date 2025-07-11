@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function pemenang()
     {
-        return $this->hasMany(Pemenang::class);
+        return $this->hasMany(Pemenang::class, 'id_user');
     }
 
     public function datadiri()

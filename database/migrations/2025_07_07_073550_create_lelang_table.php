@@ -17,6 +17,7 @@ return new class extends Migration
             $table->dateTime('jadwal_mulai');
             $table->dateTime('jadwal_berakhir');
             $table->enum('status', ['dibuka', 'ditutup', 'selesai'])->default('ditutup');
+            $table->string('kode_lelang')->unique();
             $table->foreign('id_barang')->references('id')->on('barangs');
             $table->timestamps();
         });

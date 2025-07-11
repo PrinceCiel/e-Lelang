@@ -33,6 +33,7 @@
                         <th>No</th>
                         <th>Nama Lelang</th>
                         <th>Nama Pemenang</th>
+                        <th>BID Tertinggi</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -43,8 +44,8 @@
                             {{$loop->iteration}}
                         </td>
                         <td>{{$data->lelang->barang->nama}}</td>
-                        <td>{{$data->users->nama_lengkap}}</td>
-                        <td>{{ $data->harga }}</td>
+                        <td>{{$data->user->nama_lengkap}}</td>
+                        <td>{{ $data->bid }}</td>
                         <td>
                           <form action="">
                             <button
@@ -54,12 +55,6 @@
                               data-bs-target="#modalCenter-{{ $data->slug }}">
                               Show
                             </button>
-                            <a class="btn btn-warning" href="{{ route('backend.barang.edit', $data->slug) }}"
-                              ><i class="icon-base bx bx-edit-alt me-1"></i></a
-                              >
-                              <a class="btn btn-danger" href="{{ route('backend.barang.destroy', $data->id) }}" data-confirm-delete="true"
-                                ><i class="icon-base bx bx-trash me-1"></i></a
-                              >
                           </form>
                         </td>
                       </tr>
@@ -163,7 +158,7 @@
                         id="nameWithTitle"
                         class="form-control"
                         placeholder=""
-                        value="{{ $data->users->nama_lengkap }}"
+                        value="{{ $data->user->nama_lengkap }}"
                         disabled />
                     </div>
                   </div>>

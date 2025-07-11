@@ -249,6 +249,7 @@
     <script src="{{ asset('sbidu/assets/js/yscountdown.min.js') }}"></script>
     <script src="{{ asset('sbidu/assets/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('sbidu/assets/js/main.js') }}"></script>
+    @include('sweetalert::alert')
 </body>
 
 </html>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_lelang');
             $table->unsignedBigInteger('id_user');
+            $table->integer('bid');
             $table->foreign('id_lelang')->references('id')->on('lelangs');
             $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();

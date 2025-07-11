@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lelang extends Model
 {
-    public $fillable = ['id_barang','jadwal_mulai','jadwal_berakhir','status'];
+    public $fillable = ['id_barang','jadwal_mulai','jadwal_berakhir','status', 'kode_lelang'];
 
     public function pemenang()
     {
-        return $this->hasOne(Pemenang::class);
+        return $this->hasOne(Pemenang::class, 'id_lelang');
     }
 
     public function bid()
     {
-        return $this->hasOne(Bid::class);
+        return $this->hasMany(Bid::class, 'id_lelang');
     }
 
     public function struk()

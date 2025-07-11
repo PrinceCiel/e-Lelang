@@ -75,17 +75,18 @@
             </div>
             <div class="row justify-content-center mb-30-none">
                 @foreach($item->barang as $barang)
-                    @foreach($barang->lelang as $lelang)
+                    @php $lelangs = $barang->lelang()->where('status', 'dibuka')->get(); @endphp
+                    @foreach($lelangs as $lelang)
                     <div class="col-sm-10 col-md-6 col-lg-4">
                         <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1600">
                             <div class="auction-thumb">
-                                <a href="{{ route('single.index', $barang->slug) }}"><img src="{{ Storage::url($barang->foto) }}" alt="watches"></a>
+                                <a href="{{ route('lelang.show', $lelang->kode_lelang) }}"><img src="{{ Storage::url($barang->foto) }}" alt="watches"></a>
                                 <a href="#0" class="rating"><i class="far fa-star"></i></a>
                                 <a href="#0" class="bid"><i class="flaticon-auction"></i></a>
                             </div>
                             <div class="auction-content">
                                 <h6 class="title">
-                                    <a href="{{ route('single.index', $barang->slug) }}">{{$barang->nama}}</a>
+                                    <a href="{{ route('lelang.show', $lelang->kode_lelang) }}">{{$barang->nama}}</a>
                                 </h6>
                                 <div class="bid-area">
                                     <div class="bid-amount">

@@ -10,11 +10,11 @@ class Bid extends Model
 
     public function lelang()
     {
-        return $this->belongsTo(Lelang::class);
+        return $this->belongsTo(Lelang::class, 'id_lelang');
     }
 
     public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_user');
     }
 }
