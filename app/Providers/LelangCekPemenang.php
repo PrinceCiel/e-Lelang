@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+
+use App\Models\Kategori;
 use Str;
 use App\Models\Lelang;  
 use App\Models\Pemenang;
@@ -25,10 +27,11 @@ class LelangCekPemenang extends ServiceProvider
      */
     public function boot(): void
     {
+        $kategoris = Kategori::all();
+        View::share('kategoris', $kategoris);
         // Jalan di setiap request, auto check lelang yang udah berakhir
         View::composer('*', function () {
             $lelangs = Lelang::latest()->get();
-
             foreach($lelangs as $lelang){
                 $now = now();
                 if($now->lt($lelang->jadwal_mulai)) {

@@ -40,7 +40,7 @@
     @yield('content')
 
     <!--============= Footer Section Starts Here =============-->
-    <footer class="bg_img padding-top oh" data-background="{{ asset('sbidu/assets/images/footer/footer-bg.jpg') }}">
+    <footer class="bg_img padding-top oh" data-background="{{ asset('sbidu/assets/images/footer/footer-bg.jpg') }}" style="padding-top: 450px;">
         <div class="footer-top-shape">
             <img src="{{ asset('sbidu/assets/css/img/footer-top-shape.png') }}" alt="css">
         </div>
@@ -69,32 +69,13 @@
                 <div class="row mb--60">
                     <div class="col-sm-6 col-lg-3" data-aos="fade-down" data-aos-duration="1000">
                         <div class="footer-widget widget-links">
-                            <h5 class="title">Auction Categories</h5>
+                            <h5 class="title">Kategori Lelang</h5>
                             <ul class="links-list">
+                                @foreach($kategoris as $data)
                                 <li>
-                                    <a href="#0">Ending Now</a>
+                                    <a href="{{ route('kategori.show', $data->slug) }}">{{ $data->nama }}</a>
                                 </li>
-                                <li>
-                                    <a href="#0">Vehicles</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Watches</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Electronics</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Real Estate</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Jewelry</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Art</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Sports & Outdoor</a>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -231,6 +212,7 @@
     <script src="{{ asset('sbidu/assets/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('sbidu/assets/js/main.js') }}"></script>
     @include('sweetalert::alert')
+    @stacks('scripts')
 </body>
 
 </html>

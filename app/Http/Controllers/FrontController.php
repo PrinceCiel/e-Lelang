@@ -13,4 +13,10 @@ class FrontController extends Controller
         $kategori = Kategori::all();
         return view('frontend', compact('kategori'));
     }
+
+    public function show(string $slug)
+    {
+        $kategori = Kategori::where('slug', $slug)->first();
+        return view('kategori', compact('kategori'));
+    }
 }
