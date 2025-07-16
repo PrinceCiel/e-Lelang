@@ -16,12 +16,6 @@
                           </div>
                           <div class="d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto mt-0">
                             <div class="dt-buttons btn-group flex-wrap mb-0">
-                              <button class="btn buttons-collection btn-label-primary dropdown-toggle me-4" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false" fdprocessedid="5hjenb">
-                                <span>
-                                  <span class="d-flex align-items-center gap-2"><i class="icon-base bx bx-export me-sm-1"></i>
-                                  <span class="d-none d-sm-inline-block">Export</span>
-                                </span>
-                              </button>
                               <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{ route('backend.kategori.create')}}">
                                 <span>
                                   <span class="d-flex align-items-center gap-2">

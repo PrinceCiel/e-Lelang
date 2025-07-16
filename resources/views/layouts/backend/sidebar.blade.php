@@ -4,7 +4,7 @@
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <span class="text-primary">
-                  <img src="{{ asset('icon/icon.png') }}" alt="logo" class="logo-img" style="padding: 10px 0;max-width: 150px;">
+                  <img src="{{ asset('icon/logo.png') }}" alt="logo" class="logo-img" style="padding: 10px 0;max-width: 150px;">
                 </span>
               </span>
             </a>

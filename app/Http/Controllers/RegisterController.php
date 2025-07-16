@@ -1,26 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Services\MidtransService;
-use App\Models\Struk;
+use Str;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class StrukController extends Controller
+class RegisterController extends Controller
 {
-    protected $midtrans;
-
-    public function __construct(MidtransService $midtrans)
-    {
-        $this->midtrans = $midtrans;
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $struk = Struk::where('user_id', Auth::user()->id)->latest()->firstOrFail();
-        return view('struk', compact('struk'));
+        //
     }
 
     /**
@@ -36,7 +28,25 @@ class StrukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required', 'string', 'max:255',
+            'email' => 'required', 'string', 'email', 'max:255', 'unique:users',
+            'password' => 'required', 'string', 'min:8', 'confirmed',
+            'foto' => 'required',
+        ]);
+        $user = new User();
+        $user->nama_lengkap = $request->nama;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        if($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $randomName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('profil', $randomName, 'public');
+            // memasukan nama image nya ke database
+            $user->foto = $path;
+        }
+        $user->save();
+        return redirect()->route('login');
     }
 
     /**

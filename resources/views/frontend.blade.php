@@ -7,10 +7,9 @@
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6 col-xl-6">
                     <div class="banner-content cl-white">
-                        <h5 class="cate" data-aos="fade-down" data-aos-duration="1000">Next Generation Auction</h5>
-                        <h1 class="title" data-aos="zoom-out-up" data-aos-duration="1200"><span class="d-xl-block">Find Your</span> Next Deal!</h1>
+                        <h1 class="title" data-aos="zoom-out-up" data-aos-duration="1200"><span class="d-xl-block">Selamat Datang</span> di e-Lelang SMK Assalaam!</h1>
                         <p class="pras" data-aos="zoom-out-down" data-aos-duration="1300">
-                            Online Auction is where everyone goes to shop, sell,and give, while discovering variety and affordability.
+                            Platform lelang online yang dirancang untuk siswa dan masyarakat agar bisa jual, beli, dan berbagi barang secara mudah, cepat, dan transparan.
                         </p>
                         <a href="#0" class="custom-button yellow btn-large" data-aos="zoom-out-up" data-aos-duration="1500">Get Started</a>
                     </div>
@@ -59,71 +58,104 @@
 
     <!--============= Watches Auction Section Starts Here =============-->
     @foreach($kategori as $item)
-    <section class="watches-auction-section padding-bottom padding-top">
-        <div class="container">
-            <div class="section-header-3" data-aos="zoom-out-down" data-aos-duration="1200">
-                <div class="left">
-                    <div class="thumb">
-                        <img src="{{ asset('sbidu/assets/images/header-icons/coin-1.png') }}" alt="header-icons">
+    @php
+        $barangLelangAktif = $item->barang->filter(function($barang) {
+            return $barang->lelang()->where('status', 'dibuka')->count() > 0;
+        });
+    @endphp
+    @if($barangLelangAktif->count() > 0)
+        <section class="watches-auction-section padding-bottom padding-top">
+            <div class="container">
+                <div class="section-header-3" data-aos="zoom-out-down" data-aos-duration="1200">
+                    <div class="left">
+                        <div class="thumb">
+                            <img src="{{ asset('sbidu/assets/images/header-icons/coin-1.png') }}" alt="header-icons">
+                        </div>
+                        <div class="title-area">
+                            <h2 class="title">{{$item->nama}}</h2>
+                            <p>Shop for men & women designer brand watches</p>
+                        </div>
                     </div>
-                    <div class="title-area">
-                        <h2 class="title">{{$item->nama}}</h2>
-                        <p>Shop for men & women designer brand watches</p>
-                    </div>
+                    <a href="#0" class="normal-button">View All</a>
                 </div>
-                <a href="#0" class="normal-button">View All</a>
-            </div>
-            <div class="row justify-content-center mb-30-none">
-                @foreach($item->barang as $barang)
-                    @php $lelangs = $barang->lelang()->where('status', 'dibuka')->get(); @endphp
-                    @foreach($lelangs as $lelang)
-                    <div class="col-sm-10 col-md-6 col-lg-4">
-                        <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1600">
-                            <div class="auction-thumb">
-                                <a href="{{ route('lelang.show', $lelang->kode_lelang) }}"><img src="{{ Storage::url($barang->foto) }}" alt="watches"></a>
-                                <a href="#0" class="rating"><i class="far fa-star"></i></a>
-                                <a href="#0" class="bid"><i class="flaticon-auction"></i></a>
-                            </div>
-                            <div class="auction-content">
-                                <h6 class="title">
-                                    <a href="{{ route('lelang.show', $lelang->kode_lelang) }}">{{$barang->nama}}</a>
-                                </h6>
-                                <div class="bid-area">
-                                    <div class="bid-amount">
-                                        <div class="icon">
-                                            <i class="flaticon-auction"></i>
-                                        </div>
-                                        <div class="amount-content">
-                                            <div class="current">Current Bid</div>
-                                            <div class="amount">$876.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="bid-amount">
-                                        <div class="icon">
-                                            <i class="flaticon-money"></i>
-                                        </div>
-                                        <div class="amount-content">
-                                            <div class="current">Buy Now</div>
-                                            <div class="amount">$5,00.00</div>
-                                        </div>
-                                    </div>
+                <div class="row justify-content-center mb-30-none">
+                    @foreach($item->barang as $barang)
+                        @php 
+                            $lelangs = $barang->lelang()->where('status', 'dibuka')->get(); 
+                            $total = $lelangs->count();    
+                        @endphp
+                        @foreach($lelangs as $lelang)
+                            @php 
+                                $TotalBid = $lelang->bid->sum('bid');
+                                $hargaTerbaru = $lelang->barang->harga + $TotalBid;
+                            @endphp
+                        <div class="col-sm-10 col-md-6 col-lg-4">
+                            <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1600">
+                                <div class="auction-thumb">
+                                    <a href="{{ route('lelang.show', $lelang->kode_lelang) }}"><img src="{{ Storage::url($barang->foto) }}" alt="watches"></a>
+                                    <a href="#0" class="rating"><i class="far fa-star"></i></a>
+                                    <a href="#0" class="bid"><i class="flaticon-auction"></i></a>
                                 </div>
-                                <div class="countdown-area">
-                                    <div class="countdown">
-                                        <div id="bid_counter20"></div>
+                                <div class="auction-content">
+                                    <h6 class="title">
+                                        <a href="{{ route('lelang.show', $lelang->kode_lelang) }}">{{$barang->nama}}</a>
+                                    </h6>
+                                    <div class="bid-area">
+                                        <div class="bid-amount">
+                                            <div class="icon">
+                                                <i class="flaticon-auction"></i>
+                                            </div>
+                                            <div class="amount-content">
+                                                <div class="current">Current Bid</div>
+                                                <div class="amount">Rp{{ number_format($hargaTerbaru, 0, ',', '.') }}</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <span class="total-bids">30 Bids</span>
-                                </div>
-                                <div class="text-center">
-                                    <a href="#0" class="custom-button">Submit a bid</a>
+                                    <div class="countdown-area">
+                                        <div class="countdown">
+                                            <div id="bid_counter_{{ $lelang->id }}"></div>
+                                        </div>
+                                        <span class="total-bids">{{$total}} Bid</span>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="{{ route('lelang.show', $lelang->kode_lelang) }}" class="custom-button">Read More</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        @endforeach
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        <script>
+            @foreach($kategori as $item)
+                @foreach($item->barang as $barang)
+                    @php $lelangs = $barang->lelang()->where('status', 'dibuka')->get(); @endphp
+                    @foreach($lelangs as $lelang)
+                        const endTime{{ $lelang->id }} = new Date("{{ \Carbon\Carbon::parse($lelang->jadwal_berakhir)->format('Y-m-d\TH:i:s') }}").getTime();
+                        const countdown{{ $lelang->id }} = setInterval(() => {
+                            const now = new Date().getTime();
+                            const distance = endTime{{ $lelang->id }} - now;
+                            const target = document.getElementById("bid_counter_{{ $lelang->id }}");
+
+                            if (!target) return;
+
+                            if (distance < 0) {
+                                clearInterval(countdown{{ $lelang->id }});
+                                target.innerHTML = "<span style='color:red;'>Selesai</span>";
+                            } else {
+                                const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                const s = Math.floor((distance % (1000 * 60)) / 1000);
+                                target.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+                            }
+                        }, 1000);
                     @endforeach
                 @endforeach
-            </div>
-        </div>
-    </section>
+            @endforeach
+        </script>
+    @endif
     @endforeach
 @endsection

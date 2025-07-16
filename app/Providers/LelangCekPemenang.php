@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Bid;
 use App\Models\Kategori;
 use Str;
 use App\Models\Lelang;  
@@ -96,6 +97,32 @@ class LelangCekPemenang extends ServiceProvider
                     $struk->status = 'pending';
                     $struk->save();
                 }
+            }
+
+            $habiswaktupending = Struk::where('status', 'pending')->get();
+            foreach($habiswaktupending as $struk){
+                $bataswaktu = $struk->updated_at->addHour();
+                if($now->gt($bataswaktu)){
+                    $struk->status = 'gagal';
+                    $struk->save();
+                }
+            }
+            $struk = Struk::where('status', 'gagal')->get();
+            foreach($struk as $lelanggagal){
+                $lelangGaDibayar = Lelang::where('id', $lelanggagal->id_lelang)->first();
+                if($lelangGaDibayar){
+                    $struk = Struk::where('id_lelang', $lelangGaDibayar->id)->delete();
+                    $pemenang = Pemenang::where('id_lelang', $lelangGaDibayar->id)->delete();
+    
+                    $bid = Bid::where('id_lelang', $lelangGaDibayar->id)->delete();
+    
+                    $jadwalBaru = $now->copy()->addHour();
+                    $jadwalberakhir = $jadwalBaru->copy()->addHours(3);
+                    $lelangGaDibayar->jadwal_mulai = $jadwalBaru;
+                    $lelangGaDibayar->jadwal_berakhir = $jadwalberakhir;
+                    $lelangGaDibayar->save();
+                }
+
             }
         });
     }

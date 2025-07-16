@@ -1,3 +1,4 @@
+@if(Auth::user()->status == 'Belum Verifikasi')
 <!doctype html>
 
 <html
@@ -115,18 +116,14 @@
                       </svg>
                     </span>
                   </span>
-                  <span class="app-brand-text demo text-heading fw-bold">Sneat</span>
+                  <span class="app-brand-text demo text-heading fw-bold">e-Lelang</span>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-1">Selamat Datang di e-Lelang! 👋</h4>
-              <p class="mb-6">Daftar untuk mendapat akses lebih luas.</p>
-              <form id="formAuthentication" class="mb-6" method="POST" action="{{ route('daftar.store') }}" enctype="multipart/form-data">
+              <h4 class="mb-1">Verifikasi Data Diri</h4>
+              <p class="mb-6">verifikasi untuk mendapat akses lebih luas.</p>
+              <form id="formAuthentication" class="mb-6" method="POST" action="{{ route('verifikasi.store') }}" enctype="multipart/form-data">
                   @csrf
-                <div class="mb-6">
-                    <label for="formFile" class="form-label">Foto Profil</label>
-                    <input class="form-control" type="file" id="formFile" name="foto"/>
-                </div>
                 <div class="mb-6">
                   <label for="email" class="form-label">Nama Lengkap</label>
                   <input
@@ -135,7 +132,8 @@
                     id="email"
                     name="nama"
                     placeholder="Masukkan Nama Lengkap"
-                    autofocus />
+                    value="{{ Auth::user()->nama_lengkap}}"
+                    readonly />
                 </div>
                 <div class="mb-6">
                   <label for="email" class="form-label">Email</label>
@@ -145,45 +143,53 @@
                     id="email"
                     name="email"
                     placeholder="Enter your email"
-                    autofocus />
+                    value="{{ Auth::user()->email}}"
+                    readonly />
+                </div>
+                <div class="mb-6">
+                  <label for="email" class="form-label">No Telp Aktif</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="no_telp"
+                    placeholder="Masukkan No telp aktif"
+                    required />
                 </div>
                 <div class="mb-6 form-password-toggle">
-                  <label class="form-label" for="password">Password</label>
+                  <label class="form-label" for="password">Tanggal Lahir</label>
                   <div class="input-group input-group-merge">
                     <input
-                      type="password"
+                      type="date"
                       id="password"
                       class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password" />
-                    <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <div class="mb-6 form-password-toggle">
-                  <label class="form-label" for="password">Confirm Password</label>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password_confirmation"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password" />
-                    <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+                      name="tgl_lahir"
+                      placeholder=""
+                      aria-describedby="password" required/>
                   </div>
                 </div>
                 <div class="mb-6">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Daftar</button>
+                    <label for="formFile" class="form-label">Foto KTP</label>
+                    <input class="form-control" type="file" id="formFile" name="foto"/>
+                </div>
+                <div class="mb-6">
+                    <label class="form-label" for="basic-icon-default-message">Alamat</label>
+                    <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-message2" class="input-group-text"
+                        ><i class="icon-base bx bx-comment"></i
+                    ></span>
+                    <textarea
+                    id="basic-icon-default-message"
+                    class="form-control"
+                    placeholder="Alamat"
+                    aria-label="Hi, Do you have a moment to talk Joe?"
+                    aria-describedby="basic-icon-default-message2" name="alamat"></textarea>
+                    </div>
+                </div>
+                <div class="mb-6">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Verifikasi</button>
                 </div>
               </form>
-
-              <p class="text-center">
-                <span>Sudah punya akun?</span>
-                <a href="{{ route('login')}}">
-                  <span>Login</span>
-                </a>
-              </p>
             </div>
           </div>
           <!-- /Register -->
@@ -192,16 +198,6 @@
     </div>
 
     <!-- / Content -->
-
-    <div class="buy-now">
-      <a
-        href="https://themeselection.com/item/sneat-dashboard-pro-bootstrap/"
-        target="_blank"
-        class="btn btn-danger btn-buy-now"
-        >Upgrade to Pro</a
-      >
-    </div>
-
     <!-- Core JS -->
 
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
@@ -227,3 +223,4 @@
     <script async defer src="https://buttons.github.io/buttons.js') }}"></script>
   </body>
 </html>
+@endif

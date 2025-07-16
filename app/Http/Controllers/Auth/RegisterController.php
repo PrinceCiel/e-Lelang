@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Str;
+use Storage;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -49,9 +51,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'foto' => ['required'],
         ]);
     }
 
@@ -61,12 +64,25 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $request->validate([
+            'nama' => 'required', 'string', 'max:255',
+            'email' => 'required', 'string', 'email', 'max:255', 'unique:users',
+            'password' => 'required', 'string', 'min:8', 'confirmed',
+            'foto' => 'required',
         ]);
+        $user = new User();
+        $user->nama_lengkap = $request->nama;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        if($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $randomName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('profil', $randomName, 'public');
+            // memasukan nama image nya ke database
+            $user->foto = $path;
+        }
+        return redirect()->route('login');
     }
 }

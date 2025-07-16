@@ -27,25 +27,7 @@
                                         <a href="#0">Profile</a>
                                         <ul class="submenu">
                                             <li>
-                                                <a href="{{ route('struk.index')}}">Dashboard</a>
-                                            </li>
-                                            <li>
-                                                <a href="./profile.html">Personal Profile</a>
-                                            </li>
-                                            <li>
-                                                <a href="./my-bid.html">My Bids</a>
-                                            </li>
-                                            <li>
-                                                <a href="./winning-bids.html">Winning Bids</a>
-                                            </li>
-                                            <li>
-                                                <a href="./notifications.html">My Alert</a>
-                                            </li>
-                                            <li>
-                                                <a href="./my-favorites.html">My Favorites</a>
-                                            </li>
-                                            <li>
-                                                <a href="./referral.html">Referrals</a>
+                                                <a href="{{ route('struk.index')}}">Lelang yang Dimenangkan</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -67,12 +49,9 @@
                                     @endif
                                 </ul>
                             </li>
-                            <li>
-                                <a href="./contact.html">Contact</a>
-                            </li>
                         </ul>
-                        <form class="search-form">
-                            <input type="text" placeholder="Search for brand, model....">
+                        <form class="search-form" method="get" action="{{ route('search')}}">
+                            <input type="text" placeholder="Cari nama lelang, kode, atau kategori..." name="search" id="search">
                             <button type="submit"><i class="fas fa-search"></i></button>
                         </form>
                         <div class="search-bar d-md-none">

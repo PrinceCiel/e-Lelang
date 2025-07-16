@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('foto_dokumen');
             $table->text('alamat');
+            $table->string('no_telp');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

@@ -27,32 +27,32 @@
                 <div class="product-details-slider owl-theme owl-carousel" id="sync1">
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px  ">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
                         </div>
                     </div>
                 </div>
@@ -169,42 +169,17 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="product-sidebar-area">
+                        @if($lelang->status == 'selesai')
                         <div class="product-single-sidebar mb-3">
-                            <h6 class="title">This Auction Ends in:</h6>
-                            <div class="countdown">
-                                <div id="bid_counter1"></div>
-                            </div>
-                            <div class="side-counter-area">
-                                <div class="side-counter-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('sbidu/assets/images/product/icon1.png') }}" alt="product">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="count-title"><span class="counter">61</span></h3>
-                                        <p>Active Bidders</p>
-                                    </div>
-                                </div>
-                                <div class="side-counter-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('sbidu/assets/images/product/icon2.png') }}" alt="product">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="count-title"><span class="counter">203</span></h3>
-                                        <p>Watching</p>
-                                    </div>
-                                </div>
-                                <div class="side-counter-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('sbidu/assets/images/product/icon3.png') }}" alt="product">
-                                    </div>
-                                    <div class="content">
-                                        <h3 class="count-title"><span class="counter">82</span></h3>
-                                        <p>Total Bids</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <h4 class="title">Lelang Berakhir</h4>
+                            <h6 class="title">Pemenang : {{$lelang->pemenang->user->nama_lengkap}}</h6>
                         </div>
-                        <a href="#0" class="cart-link">View Shipping, Payment & Auction Policies</a>
+                        @else
+                        <div class="product-single-sidebar mb-3">
+                            <h6 class="title">Lelang ini berakhir pada :</h6>
+                            <div id="countdown" class="countdown-timer"></div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -278,17 +253,16 @@
                                             <td data-history="bidder">
                                                 <div class="user-info">
                                                     <div class="thumb">
-                                                        <img src="{{ asset('sbidu/assets/images/history/01.png') }}" alt="history">
+                                                        <img src="{{ Storage::url($item->users->foto) }}" alt="history">
                                                     </div>
                                                     <div class="content">
                                                         {{$item->users->nama_lengkap}}
                                                     </div>
                                                 </div>
                                             </td>
-                                            @php $bid = $item->bid + $lelang->barang->harga; @endphp
                                             <td data-history="date">{{ $item->created_at->format('Y-m-d') }}</td>
                                             <td data-history="time">{{ $item->created_at->format('h:i A') }}</td>
-                                            <td data-history="unit price">Rp{{ number_format($bid, 0, ',', '.') }}</td>
+                                            <td data-history="unit price">Rp{{ number_format($item->bid, 0, ',', '.') }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -300,7 +274,27 @@
             </div>
         </div>
     </section>
+    <script>
+        const endTime = new Date("{{ \Carbon\Carbon::parse($lelang->jadwal_berakhir)->format('Y-m-d\TH:i:s') }}").getTime();
 
+        const countdown = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = endTime - now;
+
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("countdown").innerHTML = "<span style='color:red;'>Lelang selesai</span>";
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML =
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }, 1000);
+    </script>
 @endsection
 @section('scripts')
 

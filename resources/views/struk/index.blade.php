@@ -12,25 +12,7 @@
                     <div id="DataTables_Table_0_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
                         <div class="row card-header flex-column flex-md-row pb-0">
                           <div class="d-md-flex justify-content-between align-items-center dt-layout-start col-md-auto me-auto mt-0">
-                            <h5 class="card-title mb-0 text-md-start text-center">DataTable with Buttons</h5>
-                          </div>
-                          <div class="d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto mt-0">
-                            <div class="dt-buttons btn-group flex-wrap mb-0">
-                              <button class="btn buttons-collection btn-label-primary dropdown-toggle me-4" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false" fdprocessedid="5hjenb">
-                                <span>
-                                  <span class="d-flex align-items-center gap-2"><i class="icon-base bx bx-export me-sm-1"></i>
-                                  <span class="d-none d-sm-inline-block">Export</span>
-                                </span>
-                              </button>
-                              <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{ route('backend.struk.create')}}">
-                                <span>
-                                  <span class="d-flex align-items-center gap-2">
-                                    <i class="icon-base bx bx-plus icon-sm"></i>
-                                    <span class="d-none d-sm-inline-block">Add New Record</span>
-                                  </span>
-                                </span>
-                              </a>
-                            </div>
+                            <h5 class="card-title mb-0 text-md-start text-center">Struk</h5>
                           </div>
                         </div>
                     </div>

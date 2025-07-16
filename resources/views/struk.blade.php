@@ -86,6 +86,28 @@
                                     <li>
                                         <p>Lakukan Pembayaran Sebelum {{ $struk->tgl_trx->addHour()->format('H:i d-m-Y') }}</p>
                                     </li>
+                                    <li style="text-align: center; margin-top: 20px;">
+                                        <button id="pay-button" class="btn btn-success">Bayar Pakai Midtrans</button>
+                                    </li>
+                                    <li style="text-align: center; margin-top: 20px;">
+                                        <form method="POST" action="{{ route('check.status', $struk->kode_struk) }}">
+                                            @csrf
+                                            <button class="btn btn-warning">Cek Status Pembayaran</button>
+                                        </form>
+
+                                    </li>
+                                    
+
+                                    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="Mid-client-9VUnrPJpEEUKQZXG"></script>
+                                    <script type="text/javascript">
+                                        // For example trigger on button clicked, or any time you need
+                                        var payButton = document.getElementById('pay-button');
+                                        payButton.addEventListener('click', function () {
+                                        // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token.
+                                        // Also, use the embedId that you defined in the div above, here.
+                                        window.snap.pay('{{$struk->snap_token}}');
+                                        });
+                                    </script>
                                 </ul>
                             </div>
                             @elseif($struk->status == 'pending')

@@ -12,17 +12,7 @@
                     <div id="DataTables_Table_0_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
                         <div class="row card-header flex-column flex-md-row pb-0">
                           <div class="d-md-flex justify-content-between align-items-center dt-layout-start col-md-auto me-auto mt-0">
-                            <h5 class="card-title mb-0 text-md-start text-center">DataTable with Buttons</h5>
-                          </div>
-                          <div class="d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto mt-0">
-                            <div class="dt-buttons btn-group flex-wrap mb-0">
-                              <button class="btn buttons-collection btn-label-primary dropdown-toggle me-4" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false" fdprocessedid="5hjenb">
-                                <span>
-                                  <span class="d-flex align-items-center gap-2"><i class="icon-base bx bx-export me-sm-1"></i>
-                                  <span class="d-none d-sm-inline-block">Export</span>
-                                </span>
-                              </button>
-                            </div>
+                            <h5 class="card-title mb-0 text-md-start text-center">Pemenang</h5>
                           </div>
                         </div>
                     </div>
@@ -45,7 +35,7 @@
                         </td>
                         <td>{{$data->lelang->barang->nama}}</td>
                         <td>{{$data->user->nama_lengkap}}</td>
-                        <td>{{ $data->bid }}</td>
+                        <td>Rp{{ number_format($data->bid, 0, ',', '.') }}</td>
                         <td>
                           <form action="">
                             <button
@@ -119,6 +109,11 @@
             <div class="content-backdrop fade"></div>
           </div>
           @foreach($pemenang as $data)
+          @php 
+              $datadiri = $data->user->datadiri->first(); // ambil satu datadiri
+              $no_telp = $datadiri ? preg_replace('/^0/', '62', $datadiri->no_telp) : null;
+              $linkwa = $no_telp ? "https://wa.me/" . $no_telp : '#';
+          @endphp
           <div class="modal fade" id="modalCenter-{{ $data->slug }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
@@ -133,8 +128,8 @@
                 <div class="modal-body">
                   <div class="row mb-4">
                     <div class="col text-center">
-                      <img src="{{ Storage::url($data->foto) }}"
-                          alt="Foto Barang"
+                      <img src="{{ Storage::url($data->user->foto) }}"
+                          alt="Foto User"
                           style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px;">
                     </div>
                   </div>
@@ -161,7 +156,31 @@
                         value="{{ $data->user->nama_lengkap }}"
                         disabled />
                     </div>
-                  </div>>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-6">
+                      <label for="nameWithTitle" class="form-label">Kode Lelang</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder=""
+                        value="{{ $data->lelang->kode_lelang }}"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-6">
+                      <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{$linkwa}}">
+                        <span>
+                          <span class="d-flex align-items-center gap-2">
+                            <i class="icon-base bx bx-plus icon-sm"></i>
+                            <span class="d-none d-sm-inline-block">Hubungi Pemenang</span>
+                          </span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">

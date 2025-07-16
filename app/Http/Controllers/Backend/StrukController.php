@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
+use App\Services\MidtransService;
 use App\Http\Controllers\Controller;
 use App\Models\Pemenang;
 use App\Models\Struk;
@@ -14,7 +14,7 @@ class StrukController extends Controller
      */
     public function index()
     {
-        $struk = Struk::where('status', 'pending')->get();
+        $struk = Struk::where('status', 'pending')->latest()->get();
         return view('struk.index', compact('struk'));
     }
 
