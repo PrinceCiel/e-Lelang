@@ -76,7 +76,7 @@
                             <p>Shop for men & women designer brand watches</p>
                         </div>
                     </div>
-                    <a href="#0" class="normal-button">View All</a>
+                    <a href="{{ route('kategori.show', $item->slug) }}" class="normal-button">View All</a>
                 </div>
                 <div class="row justify-content-center mb-30-none">
                     @foreach($item->barang as $barang)
@@ -86,8 +86,7 @@
                         @endphp
                         @foreach($lelangs as $lelang)
                             @php 
-                                $TotalBid = $lelang->bid->sum('bid');
-                                $hargaTerbaru = $lelang->barang->harga + $TotalBid;
+                                $bidtertinggi = $lelang->bid->max('bid');
                             @endphp
                         <div class="col-sm-10 col-md-6 col-lg-4">
                             <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1600">
@@ -107,7 +106,7 @@
                                             </div>
                                             <div class="amount-content">
                                                 <div class="current">Current Bid</div>
-                                                <div class="amount">Rp{{ number_format($hargaTerbaru, 0, ',', '.') }}</div>
+                                                <div class="amount">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}</div>
                                             </div>
                                         </div>
                                     </div>

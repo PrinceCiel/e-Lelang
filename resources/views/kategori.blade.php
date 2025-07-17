@@ -29,6 +29,10 @@
                 @foreach($kategori->barang as $barang)
                     @php $lelangs = $barang->lelang->where('status', 'dibuka'); @endphp
                     @foreach($lelangs as $lelang)
+                    @php 
+                    $bidtertinggi = $lelang->bid->max('bid');
+                    $totalbid = $lelang->bid->count();
+                    @endphp
                     <div class="col-sm-10 col-md-6 col-lg-4">
                         <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1000">
                             <div class="auction-thumb">
@@ -46,17 +50,8 @@
                                             <i class="flaticon-auction"></i>
                                         </div>
                                         <div class="amount-content">
-                                            <div class="current">Current Bid</div>
-                                            <div class="amount">$876.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="bid-amount">
-                                        <div class="icon">
-                                            <i class="flaticon-money"></i>
-                                        </div>
-                                        <div class="amount-content">
-                                            <div class="current">Buy Now</div>
-                                            <div class="amount">$5,00.00</div>
+                                            <div class="current">Tawaran Tertinggi</div>
+                                            <div class="amount">{{$bidtertinggi}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +59,7 @@
                                     <div class="countdown">
                                         <div id="bid_counter26"></div>
                                     </div>
-                                    <span class="total-bids">30 Bids</span>
+                                    <span class="total-bids">{{ $totalbid }} Bids</span>
                                 </div>
                                 <div class="text-center">
                                     <a href="#0" class="custom-button">Submit a bid</a>

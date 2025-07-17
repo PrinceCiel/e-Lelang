@@ -20,14 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [FrontController::class, 'index'])->name('awal');
 Route::get('/backend/struk/bayar/{kode}', [StrukController::class, 'bayar'])->name('backend.struk.bayar');
 Route::get('/backend/struk/status-paid/{kode}', [StrukController::class, 'setPaid']);
-Route::post('/struk/check-status/{kode}', [SingleController::class, 'checkStatus'])->name('check.status');
+Route::post('/struk/check-status/{kode}', [StrukController::class, 'checkStatus'])->name('check.status');
 Route::get('/midtrans/redirect', [MidtransController::class, 'handleRedirect'])->name('midtrans.redirect');
 Route::resource('verifikasi', VerifikasiController::class);
 Route::resource('daftar', RegisterController::class);
 Route::get('/search', [FrontController::class, 'search'])->name('search');
 
 
-Route::get('struk/{kodestruk}', [SingleController::class, 'struk'])->name('struk.detail');
+Route::get('struk/{kodestruk}', [StrukController::class, 'struk'])->name('struk.detail');
 Route::resource('struk', SingleController::class);
 Route::get('/', [FrontController::class, 'index'])->name('home');
 

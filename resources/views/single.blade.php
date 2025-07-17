@@ -109,25 +109,16 @@
                         </div>
                         <ul class="price-table mb-30">
                             @if($lelang->status === 'selesai')
-                            @php $bidtertinggi = $lelang->pemenang->bid + $lelang->barang->harga; @endphp
                             <li class="header">
                                 <h5 class="current">BID Akhir</h5>
-                                <h3 class="price">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}</h3>
+                                <h3 class="price">Rp{{ number_format($lelang->pemenang->bid, 0, ',', '.') }}</h3>
                             </li>
                             @else
                             <li class="header">
                                 <h5 class="current">Current Price</h5>
-                                <h3 class="price">Rp{{ number_format($hargaTerbaru, 0, ',', '.') }}</h3>
+                                <h3 class="price">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}</h3>
                             </li>
                             @endif
-                            <li>
-                                <span class="details">Buyer's Premium</span>
-                                <h5 class="info">10.00%</h5>
-                            </li>
-                            <li>
-                                <span class="details">Bid Increment (US)</span>
-                                <h5 class="info">$50.00</h5>
-                            </li>
                         </ul>
                         @if($lelang->status === 'dibuka')
                         <div class="product-bid-area">
@@ -137,34 +128,11 @@
                                     <img src="{{ asset('sbidu/assets/images/product/search-icon.png') }}" alt="product">
                                 </div>
                                 <input type="hidden" name="kode_lelang" value="{{$lelang->kode_lelang}}">
-                                <input type="integer" placeholder="Masukkan Kenaikan bid" name="bid">
-                                <button type="submit" class="custom-button">Submit a bid</button>
+                                <input type="integer" placeholder="Masukkan Tawaran anda" name="bid">
+                                <button type="submit" class="custom-button">Ajukan Tawaran</button>
                             </form>
                         </div>
                         @endif
-                        <div class="buy-now-area">
-                            @if($lelang->status === 'dibuka')
-                            <a href="{{ route('struk.show', $lelang->kode_lelang)}}" class="custom-button" data-confirm-delete="true">Buy Now: @php $BeliLangsung = $hargaTerbaru * 10; @endphp Rp.{{$BeliLangsung}}</a>
-                            @endif
-                            <a href="#0" class="rating custom-button active border"><i class="fas fa-star"></i> Add to Wishlist</a>
-                            <div class="share-area">
-                                <span>Share to:</span>
-                                <ul>
-                                    <li>
-                                        <a href="#0"><i class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#0"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#0"><i class="fab fa-linkedin-in"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#0"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -192,7 +160,7 @@
                             <div class="thumb">
                                 <img src="{{ asset('sbidu/assets/images/product/tab1.png') }}" alt="product">
                             </div>
-                            <div class="content">Description</div>
+                            <div class="content">Deskripsi Barang</div>
                         </a>
                     </li>
                     <li>
@@ -200,7 +168,7 @@
                             <div class="thumb">
                                 <img src="{{ asset('sbidu/assets/images/product/tab3.png') }}" alt="product">
                             </div>
-                            <div class="content">Bid History ({{$countBid}})</div>
+                            <div class="content">Riwayat Tawaran ({{$countBid}})</div>
                         </a>
                     </li>
                 </ul>
@@ -241,10 +209,10 @@
                                 <table class="history-table">
                                     <thead>
                                         <tr>
-                                            <th>Bidder</th>
-                                            <th>date</th>
-                                            <th>time</th>
-                                            <th>Bid Price</th>
+                                            <th>Penawar</th>
+                                            <th>Tanggal</th>
+                                            <th>Waktu</th>
+                                            <th>Penawaran</th>
                                         </tr>
                                     </thead>
                                     <tbody>
